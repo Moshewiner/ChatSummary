@@ -1,0 +1,36 @@
+{
+  "name": "chatsummary",
+  "version": "1.0.0",
+  "description": "This project will let you view the summary of your social media chats as beautiful graphs and information about your relationship with your closest.",
+  "main": "index.js",
+  "scripts": {
+    "tsc": "tsc",
+    "build": "npm run tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Moshewiner/ChatSummary.git"
+  },
+  "keywords": [
+    "whatsapp",
+    "telegram",
+    "relationship"
+  ],
+  "author": "Moshe Wainner",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Moshewiner/ChatSummary/issues"
+  },
+  "homepage": "https://github.com/Moshewiner/ChatSummary#readme",
+  "dependencies": {
+    "source-map-support": "^0.5.16",
+    "stopword": "^0.3.5",
+    "typescript": "^3.8.3",
+    "whatsapp-chat-parser": "^2.0.8"
+  },
+  "devDependencies": {
+    "@types/node": "^13.9.1"
+  }
+}
