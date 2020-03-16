@@ -11,7 +11,7 @@ type AverageMessagesPerWeekday = {
     [day: string]: number
 }
 
-enum Weekdays {
+export enum Weekdays {
     Sunday,
     Monday,
     Tuesday,
@@ -79,8 +79,10 @@ export class WeekdaysAverageAggregator implements Aggregator {
 
     calcAverage(messagesPerDay: MessagesBucketsPerWeekday): AverageMessagesPerWeekday {
         return Object.keys(messagesPerDay).reduce((averagePerDay, day) => {
-            averagePerDay[day] = messagesPerDay[day].length && sum(messagesPerDay[day]) / messagesPerDay[day].length;
-
+            if (messagesPerDay[day].length) {
+                averagePerDay[day] = sum(messagesPerDay[day]) / messagesPerDay[day].length;
+            }
+            
             return averagePerDay;
         }, {});
     }

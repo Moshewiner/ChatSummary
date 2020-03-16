@@ -1,6 +1,7 @@
 import * as graphql from "graphql";
 import { SchemeFields } from "./types";
 import { Message } from "../parsers/types";
+import * as _ from 'lodash';
 
 export class AllMessagesScheme implements SchemeFields {
     public get type() {
@@ -17,10 +18,11 @@ export class AllMessagesScheme implements SchemeFields {
     public get resolver() {
         return (source, args, context, info: graphql.GraphQLResolveInfo) => {
             return context.conversation.filter((message: Message) => {
-                return (args.author && message.author === args.author) ||
+                return _.isEmpty(args) ||
+                    (args.author && message.author === args.author) ||
                     (args.message && message.message === args.message) ||
                     (args.date?.gt && message.date > args.date.gt) ||
-                    (args.date?.lt && message.date < args.date.lt) 
+                    (args.date?.lt && message.date < args.date.lt)
             });
         }
     }
@@ -32,7 +34,7 @@ export class AllMessagesScheme implements SchemeFields {
                 args: {
                     author: { type: graphql.GraphQLString },
                     message: { type: graphql.GraphQLString },
-                    date: {type: this.dateOperators}
+                    date: { type: this.dateOperators }
                 },
                 resolve: this.resolver
             }
