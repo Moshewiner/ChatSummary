@@ -15,14 +15,30 @@ export class AllMessagesScheme implements SchemeFields {
         });
     }
 
+    private recursiveAnd() {
+
+    }
+
     public get resolver() {
         return (source, args, context, info: graphql.GraphQLResolveInfo) => {
             return context.conversation.filter((message: Message) => {
-                return _.isEmpty(args) ||
-                    (args.author && message.author === args.author) ||
-                    (args.message && message.message === args.message) ||
-                    (args.date?.gt && message.date > args.date.gt) ||
-                    (args.date?.lt && message.date < args.date.lt)
+                if (_.isEmpty(args)) {
+                    return true;
+                }
+
+                return Object.keys(args)
+                    .reduce((result, arg) => {
+                        if (arg === 'date') {
+                            result = result && 
+                            (args.date?.eq && Number(message.date) === +args.date.eq) ||
+                            (args.date?.gt && Number(message.date) > +args.date.gt) ||
+                            (args.date?.lt && Number(message.date) < +args.date.lt);
+                        }
+                        else {
+                            result = result && message[arg] === args[arg];
+                        }
+                        return result;
+                    }, true);
             });
         }
     }
@@ -45,6 +61,7 @@ export class AllMessagesScheme implements SchemeFields {
         return new graphql.GraphQLInputObjectType({
             name: 'DateOperators',
             fields: {
+                eq: { type: graphql.GraphQLString },
                 gt: { type: graphql.GraphQLString },
                 lt: { type: graphql.GraphQLString }
             }
