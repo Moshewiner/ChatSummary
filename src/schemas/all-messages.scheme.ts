@@ -15,10 +15,6 @@ export class AllMessagesScheme implements SchemeFields {
         });
     }
 
-    private recursiveAnd() {
-
-    }
-
     public get resolver() {
         return (source, args, context, info: graphql.GraphQLResolveInfo) => {
             return context.conversation.filter((message: Message) => {
