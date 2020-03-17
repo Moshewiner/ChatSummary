@@ -15,7 +15,7 @@ export class WordCountScheme implements SchemeFields {
 
     public get type() {
         return new graphql.GraphQLObjectType({
-            name: 'WordCountType',
+            name: this.constructor.name,
             fields: {
                 author: { type: graphql.GraphQLString },
                 keywords: {
@@ -55,13 +55,12 @@ export class WordCountScheme implements SchemeFields {
 
     public get fields() {
         return {
-            wordCount: {
-                type: graphql.GraphQLList(this.type),
-                args: {
-                    author: { type: graphql.GraphQLString },
-                },
-                resolve: this.resolver
-            }
+            type: graphql.GraphQLList(this.type),
+            args: {
+                author: { type: graphql.GraphQLString },
+            },
+            resolve: this.resolver
+
         };
     }
 }

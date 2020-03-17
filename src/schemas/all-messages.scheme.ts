@@ -25,10 +25,10 @@ export class AllMessagesScheme implements SchemeFields {
                 return Object.keys(args)
                     .reduce((result, arg) => {
                         if (arg === 'date') {
-                            result = result && 
-                            (args.date?.eq && Number(message.date) === +args.date.eq) ||
-                            (args.date?.gt && Number(message.date) > +args.date.gt) ||
-                            (args.date?.lt && Number(message.date) < +args.date.lt);
+                            result = result &&
+                                (args.date?.eq && Number(message.date) === +args.date.eq) ||
+                                (args.date?.gt && Number(message.date) > +args.date.gt) ||
+                                (args.date?.lt && Number(message.date) < +args.date.lt);
                         }
                         else {
                             result = result && message[arg] === args[arg];
@@ -41,15 +41,15 @@ export class AllMessagesScheme implements SchemeFields {
 
     public get fields() {
         return {
-            allMessages: {
-                type: graphql.GraphQLList(this.type),
-                args: {
-                    author: { type: graphql.GraphQLString },
-                    message: { type: graphql.GraphQLString },
-                    date: { type: this.dateOperators }
-                },
-                resolve: this.resolver
-            }
+
+            type: graphql.GraphQLList(this.type),
+            args: {
+                author: { type: graphql.GraphQLString },
+                message: { type: graphql.GraphQLString },
+                date: { type: this.dateOperators }
+            },
+            resolve: this.resolver
+
         };
     }
 

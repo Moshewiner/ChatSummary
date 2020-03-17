@@ -6,11 +6,10 @@ import { WeekdaysAverageAggregator, Weekdays } from "../data-aggregators/weekday
 import { Aggregator } from "../data-aggregators/types";
 import { Message } from "../parsers/types";
 import * as _ from 'lodash';
-import { EagerAnd } from 'eager-boolean-conditions';
 
 
 export class WeekdaysAverageScheme implements SchemeFields {
-    private parser: Aggregator;
+    protected parser: Aggregator;
     constructor() {
         this.parser = new WeekdaysAverageAggregator([
             new MediaMessageFilter(),
@@ -20,7 +19,7 @@ export class WeekdaysAverageScheme implements SchemeFields {
 
     public get type() {
         return new graphql.GraphQLObjectType({
-            name: 'WeekdaysAverageType',
+            name: this.constructor.name,
             fields: {
                 day: { type: graphql.GraphQLString },
                 average: { type: graphql.GraphQLFloat },
@@ -56,14 +55,12 @@ export class WeekdaysAverageScheme implements SchemeFields {
 
     public get fields() {
         return {
-            WeekdaysAverage: {
-                type: graphql.GraphQLList(this.type),
-                args: {
-                    author: { type: graphql.GraphQLString },
-                    day: { type: graphql.GraphQLString }
-                },
-                resolve: this.resolver
-            }
+            type: graphql.GraphQLList(this.type),
+            args: {
+                author: { type: graphql.GraphQLString },
+                day: { type: graphql.GraphQLString }
+            },
+            resolve: this.resolver
         };
     }
 }
