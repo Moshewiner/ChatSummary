@@ -22,7 +22,7 @@ export class WordCountAggregator {
     aggregate(messages: Message[]): WordsPerAuthor {
         const relevantMessages: Message[] = this.runFilters(this.filters, messages);
         const wordsPerAuthor = relevantMessages.reduce((wordsPerAuthor, message) => {
-            const keywords: string[] = this.extractKeywords(message);
+            const keywords: string[] = message.message.split(' ');
             wordsPerAuthor[message.author] = this.calcHistogram(keywords, wordsPerAuthor[message.author] || {});
             return wordsPerAuthor;
         }, {});
@@ -44,10 +44,6 @@ export class WordCountAggregator {
                 histogram[entry[0]] = entry[1];
                 return histogram;
             }, {});
-    }
-
-    private extractKeywords(message: Message): string[] {
-        return sw.removeStopwords(message.message.split(' '), sw.he);
     }
 
     private calcHistogram(keywords: string[], initalHistogram) {

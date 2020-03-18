@@ -6,12 +6,14 @@ import { WeekdaysAverageAggregator, Weekdays } from "../data-aggregators/weekday
 import { Aggregator } from "../data-aggregators/types";
 import { Message } from "../parsers/types";
 import * as _ from 'lodash';
+import { StopWordsMessageFilter } from "../messages-filters/stop-words.filter";
 
 
 export class WeekdaysAverageScheme implements SchemeFields {
     protected parser: Aggregator;
     constructor() {
         this.parser = new WeekdaysAverageAggregator([
+            new StopWordsMessageFilter(),
             new MediaMessageFilter(),
             new SystemAuthorMessageFilter()
         ]);

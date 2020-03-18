@@ -4,6 +4,7 @@ import { MediaMessageFilter } from "../messages-filters/media.filter";
 import { SystemAuthorMessageFilter } from "../messages-filters/system-author.filter";
 import { NonEmojiMessageFilter } from "../messages-filters/non-emoji.filter";
 import * as  graphql from "graphql";
+import { StopWordsMessageFilter } from "../messages-filters/stop-words.filter";
 
 export class WeekdaysEmojiAverageScheme extends WeekdaysAverageScheme {
     constructor() {

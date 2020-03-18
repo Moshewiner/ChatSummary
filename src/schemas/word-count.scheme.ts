@@ -3,11 +3,13 @@ import { WordCountAggregator } from "../data-aggregators/word-count";
 import { MediaMessageFilter } from "../messages-filters/media.filter";
 import { SystemAuthorMessageFilter } from "../messages-filters/system-author.filter";
 import { SchemeFields } from "./types";
+import { StopWordsMessageFilter } from "../messages-filters/stop-words.filter";
 
 export class WordCountScheme implements SchemeFields {
     private parser: WordCountAggregator;
     constructor() {
         this.parser = new WordCountAggregator([
+            new StopWordsMessageFilter(),
             new MediaMessageFilter(),
             new SystemAuthorMessageFilter()
         ]);
